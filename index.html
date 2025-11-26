@@ -3,14 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comidas Típicas del Perú</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Gastronomía Peruana | Comidas Típicas</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #c8102e, #ffcd00);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M28.1,36.6c-0.8-0.8-1.8-1.2-2.9-1.2c-1,0-2,0.4-2.7,1.2c-1.6,1.6-1.6,4.2,0,5.8l31.2,31.2c0.8,0.8,1.8,1.2,2.9,1.2 s2.1-0.4,2.9-1.2c1.6-1.6,1.6-4.2,0-5.8L28.1,36.6z" fill="white"/><path d="M71.9,36.6c-0.8-0.8-1.8-1.2-2.9-1.2c-1,0-2,0.4-2.7,1.2L35.1,68.8c-1.6,1.6-1.6,4.2,0,5.8c0.8,0.8,1.8,1.2,2.9,1.2 s2.1-0.4,2.9-1.2L71.9,42.4C73.5,40.8,73.5,38.2,71.9,36.6z" fill="white"/></svg>');
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navegación */
+        nav {
+            background-color: #0033a0;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Buscador */
+        .buscador {
+            background-color: white;
+            padding: 30px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .buscador-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .buscador h2 {
+            color: #0033a0;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #0033a0;
+            outline: none;
+        }
+
+        .search-box button {
+            background-color: #c8102e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #a00d24;
+        }
+
+        .resultados-busqueda {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .receta-encontrada {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Secciones */
+        section {
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .region {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+
+        .region:last-child {
+            margin-bottom: 0;
+        }
+
+        .region h2 {
+            color: #0033a0;
+            border-bottom: 3px solid #ffcd00;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .platos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .plato {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .plato:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .plato img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .plato:hover img {
+            transform: scale(1.05);
+        }
+
+        .plato-info {
+            padding: 20px;
+        }
+
+        .plato-info h3 {
+            color: #c8102e;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .plato-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .receta-btn {
+            background-color: #0033a0;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .receta-btn:hover {
+            background-color: #00257a;
+        }
+
+        /* Receta Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #c8102e;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffcd00;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #0033a0;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .modal-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .modal-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .modal-details {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .ingredientes, .preparacion {
+            margin-bottom: 20px;
+        }
+
+        .ingredientes h3, .preparacion h3 {
+            color: #c8102e;
+            margin-bottom: 10px;
+        }
+
+        .ingredientes ul, .preparacion ol {
+            margin-left: 20px;
+        }
+
+        .ingredientes li, .preparacion li {
+            margin-bottom: 5px;
+        }
+
+        /* Sección de música */
+        #musica {
+            background-color: #0033a0;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 50px 20px;
+        }
+
+        #musica h2 {
+            color: white;
+            border-bottom: 3px solid #ffcd00;
+            display: inline-block;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .reproductor {
+            background-color: white;
+            color: #333;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .reproductor h3 {
+            color: #0033a0;
+            margin-bottom: 20px;
+        }
+
+        .controles {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #c8102e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #a00d24;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .carga-audio {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .carga-local, .carga-github {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .carga-github {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .carga-github input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .info-musica {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .playlist {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .playlist h4 {
+            color: #0033a0;
+            margin-bottom: 10px;
+        }
+
+        #playlist {
+            list-style: none;
+        }
+
+        #playlist li {
+            padding: 10px;
+            background-color: #f5f5f5;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #playlist li:hover {
+            background-color: #e9e9e9;
+        }
+
+        #playlist li.playing {
+            background-color: #c8102e;
+            color: white;
+        }
+
+        .info-reproduccion {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #c8102e;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+            }
+            
+            .platos {
+                grid-template-columns: 1fr;
+            }
+            
+            .carga-audio {
+                flex-direction: column;
+            }
+            
+            .controles {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Comidas Típicas del Perú</h1>
-            <p>Descubre la riqueza gastronómica de la Costa, Sierra y Selva peruana</p>
+            <h1>Gastronomía Peruana</h1>
+            <p>Descubre la riqueza culinaria de la Costa, Sierra y Selva del Perú</p>
         </div>
     </header>
 
@@ -25,30 +544,46 @@
         </div>
     </nav>
 
+    <div class="buscador">
+        <div class="container buscador-container">
+            <h2>Busca tu receta peruana favorita</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Escribe el nombre de una comida...">
+                <button id="search-btn">Buscar</button>
+            </div>
+            <div class="resultados-busqueda" id="resultados-busqueda">
+                <!-- Los resultados de búsqueda aparecerán aquí -->
+            </div>
+        </div>
+    </div>
+
     <main class="container">
         <section id="costa">
             <div class="region">
                 <h2>Costa Peruana</h2>
                 <div class="platos">
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Ceviche">
+                    <div class="plato" data-receta="ceviche">
+                        <img src="https://cdn7.kiwilimon.com/recetaimagen/38819/48000.jpg" alt="Ceviche">
                         <div class="plato-info">
                             <h3>Ceviche</h3>
                             <p>Pescado fresco marinado en jugo de limón con cebolla, ají y cilantro. Plato bandera de la gastronomía peruana.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Lomo Saltado">
+                    <div class="plato" data-receta="lomo-saltado">
+                        <img src="https://t1.uc.ltmcdn.com/es/posts/4/9/5/como_hacer_lomo_saltado_12594_600.jpg" alt="Lomo Saltado">
                         <div class="plato-info">
                             <h3>Lomo Saltado</h3>
                             <p>Salteado de lomo de res con cebolla, tomate, ají y papas fritas. Fusión de la cocina peruana y china.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Aji de Gallina">
+                    <div class="plato" data-receta="aji-gallina">
+                        <img src="https://www.eatperu.com/wp-content/uploads/2020/02/aji-de-gallina-peruvian-chicken-in-a-yellow-chili-sauce-1200-500x500.jpg" alt="Aji de Gallina">
                         <div class="plato-info">
                             <h3>Aji de Gallina</h3>
                             <p>Gallina desmenuzada en una crema de ají amarillo, nueces y queso. Se sirve con arroz y papas.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
                 </div>
@@ -59,25 +594,28 @@
             <div class="region">
                 <h2>Sierra Peruana</h2>
                 <div class="platos">
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Pachamanca">
+                    <div class="plato" data-receta="pachamanca">
+                        <img src="https://www.comedera.com/wp-content/uploads/2022/04/pachamanca-peruana.jpg" alt="Pachamanca">
                         <div class="plato-info">
                             <h3>Pachamanca</h3>
                             <p>Carnes, papas y habas cocidas bajo tierra con piedras calientes. Tradicional plato andino.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Cuy Chactado">
+                    <div class="plato" data-receta="cuy-chactado">
+                        <img src="https://www.cocina-abc.com/storage/2020/10/Shutterstock-338012929.jpg" alt="Cuy Chactado">
                         <div class="plato-info">
                             <h3>Cuy Chactado</h3>
                             <p>Cuy frito bajo una piedra, acompañado de papas y ensalada. Plato típico de la sierra central.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Rocoto Relleno">
+                    <div class="plato" data-receta="rocoto-relleno">
+                        <img src="https://www.eatperu.com/wp-content/uploads/2020/03/stuffed-rocoto-peppers-rocoto-relleno-1200-500x500.jpg" alt="Rocoto Relleno">
                         <div class="plato-info">
                             <h3>Rocoto Relleno</h3>
                             <p>Rocoto relleno de carne molida, queso y especias, gratinado al horno. Especialidad arequipeña.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
                 </div>
@@ -88,25 +626,28 @@
             <div class="region">
                 <h2>Selva Peruana</h2>
                 <div class="platos">
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Juane">
+                    <div class="plato" data-receta="juane">
+                        <img src="https://www.cocina-abc.com/storage/2020/10/Shutterstock-1725477936.jpg" alt="Juane">
                         <div class="plato-info">
                             <h3>Juane</h3>
                             <p>Arroz con gallina envuelto en hojas de bijao. Plato tradicional de la selva peruana.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Tacacho con Cecina">
+                    <div class="plato" data-receta="tacacho-cecina">
+                        <img src="https://www.eatperu.com/wp-content/uploads/2020/03/tacacho-con-cecina-fried-green-plantain-pork-1200-500x500.jpg" alt="Tacacho con Cecina">
                         <div class="plato-info">
                             <h3>Tacacho con Cecina</h3>
                             <p>Plátano verde asado y machacado con manteca, acompañado de cecina (carne de cerdo seca).</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
-                    <div class="plato">
-                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Inchicapi">
+                    <div class="plato" data-receta="inchicapi">
+                        <img src="https://img-global.cpcdn.com/recipes/6e1d3e8d8d0d3c6a/1200x630cq70/photo.jpg" alt="Inchicapi">
                         <div class="plato-info">
                             <h3>Inchicapi</h3>
                             <p>Sopa espesa de gallina con maní, yuca, maíz y culantro. Plato tradicional de la amazonía.</p>
+                            <button class="receta-btn">Ver Receta</button>
                         </div>
                     </div>
                 </div>
@@ -132,7 +673,7 @@
                         <input type="file" id="file-input" accept="audio/*">
                     </div>
                     
-                    <div class="carga-github">
+                    <div class="carga-github" style="display: none;">
                         <h4>Cargar desde GitHub</h4>
                         <input type="text" id="github-url" placeholder="Pega la URL raw de GitHub">
                         <button id="load-github-btn">Cargar</button>
@@ -162,13 +703,530 @@
         </section>
     </main>
 
+    <!-- Modal para mostrar recetas -->
+    <div class="modal" id="receta-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modal-titulo">Título de la Receta</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modal-imagen" src="" alt="Imagen de la receta">
+                </div>
+                <div class="modal-details">
+                    <div class="ingredientes">
+                        <h3>Ingredientes</h3>
+                        <ul id="modal-ingredientes">
+                            <!-- Los ingredientes se cargarán aquí -->
+                        </ul>
+                    </div>
+                    <div class="preparacion">
+                        <h3>Preparación</h3>
+                        <ol id="modal-preparacion">
+                            <!-- Los pasos de preparación se cargarán aquí -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
-            <p>&copy; 2023 Comidas Típicas del Perú - Todos los derechos reservados</p>
-            <p>Gastronomía peruana: Patrimonio Cultural de la Humanidad</p>
+            <p>&copy; 2023 Gastronomía Peruana - Todos los derechos reservados</p>
+            <p>La cocina peruana: Patrimonio Cultural de la Humanidad</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Base de datos de recetas
+        const recetas = {
+            "ceviche": {
+                nombre: "Ceviche Peruano",
+                imagen: "https://cdn7.kiwilimon.com/recetaimagen/38819/48000.jpg",
+                ingredientes: [
+                    "1 kg de filete de pescado blanco (corvina, lenguado, etc.)",
+                    "2 cebollas rojas",
+                    "1 ají limo",
+                    "1 taza de jugo de limón",
+                    "Sal y pimienta al gusto",
+                    "Culantro picado",
+                    "Camote sancochado",
+                    "Choclo sancochado",
+                    "Hojas de lechuga"
+                ],
+                preparacion: [
+                    "Cortar el pescado en cubos de 2-3 cm y colocar en un recipiente.",
+                    "Agregar sal, pimienta y el ají limo picado.",
+                    "Verter el jugo de limón sobre el pescado y mezclar suavemente.",
+                    "Incorporar la cebolla cortada en juliana y el culantro picado.",
+                    "Dejar marinar por 10-15 minutos en refrigeración.",
+                    "Servir acompañado de camote, choclo y lechuga."
+                ]
+            },
+            "lomo-saltado": {
+                nombre: "Lomo Saltado",
+                imagen: "https://t1.uc.ltmcdn.com/es/posts/4/9/5/como_hacer_lomo_saltado_12594_600.jpg",
+                ingredientes: [
+                    "500 g de lomo de res en tiras",
+                    "2 cebollas rojas en gajos",
+                    "2 tomates en gajos",
+                    "1 ají amarillo en tiras",
+                    "3 dientes de ajo picados",
+                    "2 cucharadas de salsa de soja",
+                    "1 cucharada de vinagre",
+                    "Perejil picado",
+                    "Papas fritas",
+                    "Arroz blanco"
+                ],
+                preparacion: [
+                    "Sellar la carne en una sartén bien caliente con un poco de aceite.",
+                    "Agregar el ajo y saltear por 1 minuto.",
+                    "Incorporar la cebolla, el tomate y el ají amarillo.",
+                    "Añadir la salsa de soja y el vinagre, mezclar bien.",
+                    "Cocinar por 3-4 minutos hasta que las verduras estén cocidas pero firmes.",
+                    "Espolvorear con perejil picado y servir inmediatamente con papas fritas y arroz blanco."
+                ]
+            },
+            "aji-gallina": {
+                nombre: "Ají de Gallina",
+                imagen: "https://www.eatperu.com/wp-content/uploads/2020/02/aji-de-gallina-peruvian-chicken-in-a-yellow-chili-sauce-1200-500x500.jpg",
+                ingredientes: [
+                    "1 pechuga de gallina cocida y desmenuzada",
+                    "4 panes de molleta remojados en leche",
+                    "1 cebolla picada",
+                    "2 dientes de ajo picados",
+                    "3 cucharadas de ají amarillo molido",
+                    "1/2 taza de nueces molidas",
+                    "1/2 taza de queso parmesano rallado",
+                    "1 taza de caldo de gallina",
+                    "Aceite vegetal",
+                    "Arroz blanco",
+                    "Papas sancochadas",
+                    "Huevos duros"
+                ],
+                preparacion: [
+                    "En una olla, sofreír la cebolla y el ajo en aceite hasta que estén dorados.",
+                    "Agregar el ají amarillo y cocinar por 2 minutos.",
+                    "Incorporar el pan remojado (exprimido), las nueces y el queso.",
+                    "Verter el caldo poco a poco hasta obtener una crema espesa.",
+                    "Añadir la gallina desmenuzada y cocinar por 10 minutos a fuego bajo.",
+                    "Servir sobre papas sancochadas, acompañado de arroz blanco y huevo duro."
+                ]
+            },
+            "pachamanca": {
+                nombre: "Pachamanca",
+                imagen: "https://www.comedera.com/wp-content/uploads/2022/04/pachamanca-peruana.jpg",
+                ingredientes: [
+                    "1 kg de carne de cerdo",
+                    "1 kg de carne de cordero",
+                    "1 kg de pollo",
+                    "2 kg de papas",
+                    "1 kg de camotes",
+                    "1 kg de habas",
+                    "1 kg de choclos",
+                    "Hojas de plátano o bijao",
+                    "Hierbas aromáticas (huacatay, chincho, culantro)",
+                    "Ajíes y especias al gusto"
+                ],
+                preparacion: [
+                    "Preparar un hoyo en la tierra y calentar piedras en él.",
+                    "Colocar una base de piedras calientes y hierbas aromáticas.",
+                    "Disponer las carnes sazonadas sobre las hierbas.",
+                    "Añadir las papas, camotes, habas y choclos.",
+                    "Cubrir con más hierbas y piedras calientes.",
+                    "Tapar con tierra y cocinar por 2-3 horas.",
+                    "Destapar cuidadosamente y servir caliente."
+                ]
+            },
+            "cuy-chactado": {
+                nombre: "Cuy Chactado",
+                imagen: "https://www.cocina-abc.com/storage/2020/10/Shutterstock-338012929.jpg",
+                ingredientes: [
+                    "2 cuyes limpios y troceados",
+                    "4 papas amarillas",
+                    "1 lechuga",
+                    "2 tomates",
+                    "1 cebolla roja",
+                    "Aceite vegetal",
+                    "Sal, pimienta y comino",
+                    "Ají molido"
+                ],
+                preparacion: [
+                    "Sazonar los cuyes con sal, pimienta, comino y ají molido.",
+                    "Calentar abundante aceite en una sartén grande.",
+                    "Freír los cuyes a fuego medio hasta que estén dorados y crujientes.",
+                    "Escurrir sobre papel absorbente.",
+                    "Servir con papas sancochadas, ensalada de lechuga, tomate y cebolla."
+                ]
+            },
+            "rocoto-relleno": {
+                nombre: "Rocoto Relleno",
+                imagen: "https://www.eatperu.com/wp-content/uploads/2020/03/stuffed-rocoto-peppers-rocoto-relleno-1200-500x500.jpg",
+                ingredientes: [
+                    "6 rocotos",
+                    "500 g de carne molida",
+                    "1 cebolla picada",
+                    "2 dientes de ajo picados",
+                    "1/2 taza de pasas",
+                    "1/2 taza de aceitunas",
+                    "2 huevos duros picados",
+                    "200 g de queso fresco",
+                    "Leche evaporada",
+                    "Pan molido",
+                    "Aceite vegetal"
+                ],
+                preparacion: [
+                    "Hervir los rocotos para quitarles el picor, cambiando el agua 2-3 veces.",
+                    "Quitar las venas y semillas con cuidado.",
+                    "Preparar el relleno sofriendo la cebolla y ajo, añadiendo la carne, pasas y aceitunas.",
+                    "Rellenar los rocotos con la mezcla de carne.",
+                    "Cubrir con una mezcla de queso, leche y huevo batido.",
+                    "Espolvorear con pan molido y hornear a 180°C por 20-25 minutos."
+                ]
+            },
+            "juane": {
+                nombre: "Juane",
+                imagen: "https://www.cocina-abc.com/storage/2020/10/Shutterstock-1725477936.jpg",
+                ingredientes: [
+                    "2 tazas de arroz",
+                    "500 g de gallina",
+                    "1 cebolla picada",
+                    "2 dientes de ajo picados",
+                    "Hojas de bijao",
+                    "Achiote",
+                    "Comino",
+                    "Pimienta",
+                    "Sal",
+                    "Aceitunas",
+                    "Huevos duros"
+                ],
+                preparacion: [
+                    "Cocinar el arroz con achiote hasta que esté medio cocido.",
+                    "Sofreír la gallina con cebolla, ajo y especias.",
+                    "Mezclar el arroz con la gallina y las aceitunas.",
+                    "Colocar porciones de la mezcla en hojas de bijao.",
+                    "Añadir un huevo duro en el centro de cada porción.",
+                    "Envolver formando una bola y amarrar con pabilo.",
+                    "Hervir por 45 minutos a 1 hora.",
+                    "Servir caliente o frío."
+                ]
+            },
+            "tacacho-cecina": {
+                nombre: "Tacacho con Cecina",
+                imagen: "https://www.eatperu.com/wp-content/uploads/2020/03/tacacho-con-cecina-fried-green-plantain-pork-1200-500x500.jpg",
+                ingredientes: [
+                    "6 plátanos verdes",
+                    "200 g de manteca de cerdo",
+                    "300 g de cecina",
+                    "Chorizo",
+                    "Aceite vegetal",
+                    "Sal al gusto"
+                ],
+                preparacion: [
+                    "Asar los plátanos verdes hasta que estén cocidos.",
+                    "Pelar y machacar los plátanos con la manteca de cerdo y sal.",
+                    "Formar bolitas con la masa de plátano (tacachos).",
+                    "Freír la cecina y el chorizo en aceite caliente.",
+                    "Servir los tacachos acompañados de cecina y chorizo."
+                ]
+            },
+            "inchicapi": {
+                nombre: "Inchicapi",
+                imagen: "https://img-global.cpcdn.com/recipes/6e1d3e8d8d0d3c6a/1200x630cq70/photo.jpg",
+                ingredientes: [
+                    "1 gallina de corral",
+                    "2 tazas de maní tostado y molido",
+                    "2 yucas",
+                    "2 choclos",
+                    "1 cebolla picada",
+                    "2 dientes de ajo picados",
+                    "Culantro picado",
+                    "Sal y pimienta al gusto",
+                    "Aceite vegetal"
+                ],
+                preparacion: [
+                    "Cocinar la gallina en agua con sal hasta que esté tierna.",
+                    "En una olla aparte, sofreír la cebolla y el ajo.",
+                    "Agregar el maní molido y cocinar por 5 minutos.",
+                    "Incorporar el caldo de gallina y mezclar bien.",
+                    "Añadir la gallina desmenuzada, la yuca y el choclo en trozos.",
+                    "Cocinar por 20-25 minutos hasta que espese.",
+                    "Agregar el culantro picado antes de servir."
+                ]
+            }
+        };
+
+        // Elementos del DOM
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const resultadosBusqueda = document.getElementById('resultados-busqueda');
+        const recetaModal = document.getElementById('receta-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const modalTitulo = document.getElementById('modal-titulo');
+        const modalImagen = document.getElementById('modal-imagen');
+        const modalIngredientes = document.getElementById('modal-ingredientes');
+        const modalPreparacion = document.getElementById('modal-preparacion');
+
+        // Elementos del reproductor de música
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const fileInput = document.getElementById('file-input');
+        const githubUrlInput = document.getElementById('github-url');
+        const loadGithubBtn = document.getElementById('load-github-btn');
+        const playlist = document.getElementById('playlist');
+        const currentTrack = document.getElementById('current-track');
+        const progressBar = document.querySelector('.progress');
+        const githubBtn = document.getElementById('github-btn');
+
+        let audio = new Audio();
+        let isPlaying = false;
+        let currentPlaylistItem = null;
+
+        // Función para buscar recetas
+        function buscarReceta() {
+            const query = searchInput.value.trim().toLowerCase();
+            resultadosBusqueda.innerHTML = '';
+            
+            if (query === '') {
+                resultadosBusqueda.style.display = 'none';
+                return;
+            }
+            
+            const recetasEncontradas = Object.keys(recetas).filter(key => {
+                return recetas[key].nombre.toLowerCase().includes(query);
+            });
+            
+            if (recetasEncontradas.length === 0) {
+                resultadosBusqueda.innerHTML = '<p>No se encontraron recetas con ese nombre.</p>';
+                resultadosBusqueda.style.display = 'block';
+                return;
+            }
+            
+            recetasEncontradas.forEach(key => {
+                const receta = recetas[key];
+                const recetaElement = document.createElement('div');
+                recetaElement.className = 'receta-encontrada';
+                recetaElement.innerHTML = `
+                    <h3>${receta.nombre}</h3>
+                    <p>${receta.ingredientes.slice(0, 3).join(', ')}...</p>
+                    <button class="receta-btn" data-receta="${key}">Ver Receta Completa</button>
+                `;
+                resultadosBusqueda.appendChild(recetaElement);
+            });
+            
+            resultadosBusqueda.style.display = 'block';
+            
+            // Agregar event listeners a los botones de receta
+            document.querySelectorAll('.receta-encontrada .receta-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const recetaKey = this.getAttribute('data-receta');
+                    mostrarReceta(recetaKey);
+                });
+            });
+        }
+
+        // Función para mostrar receta en modal
+        function mostrarReceta(recetaKey) {
+            const receta = recetas[recetaKey];
+            
+            modalTitulo.textContent = receta.nombre;
+            modalImagen.src = receta.imagen;
+            modalImagen.alt = receta.nombre;
+            
+            // Limpiar listas anteriores
+            modalIngredientes.innerHTML = '';
+            modalPreparacion.innerHTML = '';
+            
+            // Agregar ingredientes
+            receta.ingredientes.forEach(ingrediente => {
+                const li = document.createElement('li');
+                li.textContent = ingrediente;
+                modalIngredientes.appendChild(li);
+            });
+            
+            // Agregar preparación
+            receta.preparacion.forEach((paso, index) => {
+                const li = document.createElement('li');
+                li.textContent = paso;
+                modalPreparacion.appendChild(li);
+            });
+            
+            // Mostrar modal
+            recetaModal.style.display = 'block';
+        }
+
+        // Event listeners para búsqueda
+        searchBtn.addEventListener('click', buscarReceta);
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                buscarReceta();
+            }
+        });
+
+        // Event listeners para botones de receta en las tarjetas
+        document.querySelectorAll('.receta-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const plato = this.closest('.plato');
+                const recetaKey = plato.getAttribute('data-receta');
+                mostrarReceta(recetaKey);
+            });
+        });
+
+        // Cerrar modal
+        closeModal.addEventListener('click', function() {
+            recetaModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === recetaModal) {
+                recetaModal.style.display = 'none';
+            }
+        });
+
+        // Funcionalidad del reproductor de música
+        function updateProgressBar() {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+        }
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const objectURL = URL.createObjectURL(file);
+                audio.src = objectURL;
+                audio.load();
+                currentTrack.textContent = `Reproduciendo: ${file.name}`;
+                
+                playBtn.disabled = false;
+                pauseBtn.disabled = false;
+                stopBtn.disabled = false;
+                
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playBtn.textContent = "Reproduciendo...";
+                }).catch(error => {
+                    console.log('Reproducción automática bloqueada:', error);
+                });
+                
+                audio.addEventListener('timeupdate', updateProgressBar);
+            }
+        });
+
+        loadGithubBtn.addEventListener('click', function() {
+            const url = githubUrlInput.value.trim();
+            if (url) {
+                cargarDesdeGitHub(url);
+            } else {
+                alert('Por favor, ingresa una URL válida de GitHub');
+            }
+        });
+
+        githubBtn.addEventListener('click', function() {
+            document.querySelector('.carga-github').style.display = 
+                document.querySelector('.carga-github').style.display === 'none' ? 'block' : 'none';
+        });
+
+        function cargarDesdeGitHub(url) {
+            audio.src = url;
+            audio.load();
+            
+            const fileName = url.split('/').pop();
+            currentTrack.textContent = `Reproduciendo: ${fileName}`;
+            
+            playBtn.disabled = false;
+            pauseBtn.disabled = false;
+            stopBtn.disabled = false;
+            
+            audio.play().then(() => {
+                isPlaying = true;
+                playBtn.textContent = "Reproduciendo...";
+            }).catch(error => {
+                console.log('Error al reproducir:', error);
+                alert('Error al cargar el archivo. Verifica que la URL sea correcta y el archivo sea de audio.');
+            });
+            
+            audio.addEventListener('timeupdate', updateProgressBar);
+        }
+
+        playBtn.addEventListener('click', function() {
+            if (audio.src) {
+                audio.play();
+                isPlaying = true;
+                playBtn.textContent = "Reproduciendo...";
+            } else {
+                alert('Primero carga un archivo de audio');
+            }
+        });
+
+        pauseBtn.addEventListener('click', function() {
+            audio.pause();
+            isPlaying = false;
+            playBtn.textContent = "Reproducir";
+        });
+
+        stopBtn.addEventListener('click', function() {
+            audio.pause();
+            audio.currentTime = 0;
+            isPlaying = false;
+            playBtn.textContent = "Reproducir";
+            progressBar.style.width = '0%';
+        });
+
+        playlist.addEventListener('click', function(e) {
+            if (e.target.tagName === 'LI') {
+                const url = e.target.getAttribute('data-url');
+                
+                if (currentPlaylistItem) {
+                    currentPlaylistItem.classList.remove('playing');
+                }
+                e.target.classList.add('playing');
+                currentPlaylistItem = e.target;
+                
+                cargarDesdeGitHub(url);
+            }
+        });
+
+        audio.addEventListener('ended', function() {
+            isPlaying = false;
+            playBtn.textContent = "Reproducir";
+            progressBar.style.width = '0%';
+        });
+
+        // Smooth scroll para la navegación
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Inicializar estado de botones del reproductor
+        playBtn.disabled = true;
+        pauseBtn.disabled = true;
+        stopBtn.disabled = true;
+
+        // Efectos de hover en platos
+        document.querySelectorAll('.plato').forEach(plato => {
+            plato.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.15)';
+            });
+            
+            plato.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+            });
+        });
+    </script>
 </body>
 </html>
